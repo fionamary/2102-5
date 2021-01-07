@@ -1,5 +1,6 @@
 # 2102-5
 Second Day of Zoom Tools 
+<!DOCTYPE html>
 <html lang="en" >
 
 <head>
@@ -56,26 +57,40 @@ Second Day of Zoom Tools
   
       <script id="rendered-js" >
 console.clear();
-console.log("hello world");
 
 const students = [];
 
-function makeStudent(username,first,last,gradeLevel){
+function makeStudent(username, first, last, gradeLevel) {
   const student = {};
   student.username = username;
   student.first = first;
   student.last = last;
   student.gradeLevel = gradeLevel;
-  console.log(student);
+  student.clickcount = 0;
   return student;
 }
 
-students.push(makeStudent("FionaAwsome","Fiona","Awsome",12));
-students.push(makeStudent("Lucy","Lucy","Bishop",11));
-console.log(students);
+students.push(makeStudent("isaacallnutt", "Isaac", "Allnutt", 12));
+students.push(makeStudent("giangasper", "Gian", "Gaspar", 11));
+students.push(makeStudent("edencampbell", "Eden", "Campbell", 10));
+students.push(makeStudent("fionaalhadeff", "Fiona", "Alhadef", 10));
+students.push(makeStudent("emmasindel-dempsy", "Emma", "Sindel-Dempsy", 11));
+students.push(makeStudent("mckenzieroberts", "Mckenzie", "Roberts", 12));
+students.push(makeStudent("samsakaguchi", "Sam", "Sakaguchi", 12));
+students.push(makeStudent("aldencutler", "Alden", "Cutler", 12));
+students.push(makeStudent("johnsawyer", "John", "Sawyer", 12));
+students.push(makeStudent("itaimalakoff", "Itai", "Malakoff", 12));
 
-function pickStudent(){
-  let randomStudentNum = Math.floor(Math.random()*students.length);
+
+
+
+
+
+
+
+
+function pickStudent() {
+  let randomStudentNum = Math.floor(Math.random() * students.length);
   let student = students[randomStudentNum];
   let element = document.getElementById("picked");
   element.innerHTML = student.first + " " + student.last;
@@ -83,7 +98,35 @@ function pickStudent(){
 
 pickStudent();
 let pickButton = document.getElementById("pickStudent");
-pickButton.addEventListener("click",pickStudent);
+pickButton.addEventListener("click", pickStudent);
+
+function renderList() {
+  console.log("renderList", students);
+  students.sort(function(a,b){return a.clickcount-b.clickcount})
+  content = "";
+  for (let i = 0; i < students.length; i++) {
+    content += `<div class="student" id="${students[i].username}">
+    ${students[i].first} ${students[i].last} ${students[i].clickcount}
+  </div>`;
+  }
+  let element = document.getElementById("container");
+  element.innerHTML = content;
+}
+
+renderList();
+
+function listclick(e){
+  console.log("listclick",e.target.id)
+  for(let i = 0; i < students.length; i++){
+    if(students[i].username == e.target.id){
+      students[i].clickcount++;
+    }
+  }
+  renderList();
+}
+
+let renderclick = document.getElementById("container");
+renderclick.addEventListener("click",listclick);
     </script>
 
   
@@ -91,4 +134,3 @@ pickButton.addEventListener("click",pickStudent);
 </body>
 
 </html>
- 
